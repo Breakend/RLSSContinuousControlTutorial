@@ -2,10 +2,10 @@
 
 Here we go over:
 
-+ How to setup MuJoCo and <a href="https://github.com/openai/rllab">openai/rllab</a>
++ How to setup <a href="http://www.mujoco.org/">MuJoCo</a> and <a href="https://github.com/openai/rllab">openai/rllab</a>
 + How to run basic TRPO and DDPG code
 + The core code snippets in TRPO and DDPG so you can build on top of these algorithms
-+ How to create your own modified MuJoCo environment
++ How to create your own modified MuJoCo environment (Multi-task modifications can be pull-requested into <a href="https://github.com/Breakend/gym-extensions">gym-extensions</a>)
 
 
 ## How to run examples
