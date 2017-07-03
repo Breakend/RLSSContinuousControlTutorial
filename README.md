@@ -6,3 +6,34 @@ Here we go over:
 + How to run basic TRPO and DDPG code
 + The core code snippets in TRPO and DDPG so you can build on top of these algorithms
 + How to create your own modified MuJoCo environment
+
+
+## How to run examples
+
+### Run TRPO
+
+```bash
+cd code; source activate rllab3; python run_trpo.py Hopper-v1
+```
+
+### Run DDPG
+
+```bash
+cd code; source activate rllab3; python run_ddpg.py Hopper-v1
+```
+
+### Plotting Results
+
+```bash
+cd code; python plot_results.py data/progress.csv Hopper-v1 --labels "trpo"
+```
+
+
+### Manual testing of an env and custom env
+```bash
+cd code; python test_manual Hopper-v1
+```
+
+```bash
+cd code; python test_modified_hopper_env_manually.py
+```

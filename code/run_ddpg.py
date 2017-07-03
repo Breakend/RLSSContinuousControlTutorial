@@ -18,8 +18,8 @@ from sandbox.rocky.tf.q_functions.continuous_mlp_q_function import \
 
 parser = argparse.ArgumentParser()
 parser.add_argument("env", help="The environment name from OpenAIGym environments")
-parser.add_argument("--num_epochs", default=100, type=int)
-parser.add_argument("--data_dir", default="./data/")
+parser.add_argument("--num_epochs", default=250, type=int)
+parser.add_argument("--data_dir", default="./data_ddpg/")
 parser.add_argument("--reward_scale", default=1.0, type=float)
 parser.add_argument("--use_ec2", action="store_true", help="Use your ec2 instances if configured")
 parser.add_argument("--dont_terminate_machine", action="store_false", help="Whether to terminate your spot instance or not. Be careful.")
