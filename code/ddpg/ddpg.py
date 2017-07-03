@@ -1,22 +1,24 @@
-# FROM: https://raw.githubusercontent.com/shaneshixiang/rllabplusplus/master/sandbox/rocky/tf/algos/ddpg.py
-from rllab.algos.base import RLAlgorithm
-from rllab.misc.overrides import overrides
-from rllab.misc import special
-from sandbox.rocky.tf.misc import tensor_utils
-from rllab.sampler import parallel_sampler
-from rllab.plotter import plotter
-from rllab.misc import ext
-import rllab.misc.logger as logger
+# MODIFIED FROM: https://raw.githubusercontent.com/shaneshixiang/rllabplusplus/master/sandbox/rocky/tf/algos/ddpg.py
+import gc
+import time
+
 #import pickle as pickle
 import numpy as np
-import pyprind
-import time
-import gc
 import tensorflow as tf
-from sandbox.rocky.tf.optimizers.first_order_optimizer import FirstOrderOptimizer
-#from sandbox.rocky.tf.core.parameterized import suppress_params_loading
+
+import pyprind
+import rllab.misc.logger as logger
+from rllab.algos.base import RLAlgorithm
 from rllab.core.serializable import Serializable
+from rllab.misc import ext, special
+from rllab.misc.overrides import overrides
+from rllab.plotter import plotter
+from rllab.sampler import parallel_sampler
 from sampling_utils import SimpleReplayPool
+from sandbox.rocky.tf.misc import tensor_utils
+from sandbox.rocky.tf.optimizers.first_order_optimizer import \
+    FirstOrderOptimizer
+
 
 class DDPG(RLAlgorithm):
     """
@@ -158,9 +160,6 @@ class DDPG(RLAlgorithm):
             initial = False
             observation = self.env.reset()
 
-            #with tf.variable_scope("sample_policy"):
-                #with suppress_params_loading():
-                #sample_policy = pickle.loads(pickle.dumps(self.policy))
             with tf.variable_scope("sample_policy"):
                 sample_policy = Serializable.clone(self.policy)
 

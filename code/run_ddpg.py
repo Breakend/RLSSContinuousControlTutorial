@@ -1,19 +1,21 @@
-from ddpg.ddpg import DDPG
-from rllab.envs.normalized_env import normalize
-from rllab.misc.instrument import stub, run_experiment_lite
-from rllab.exploration_strategies.ou_strategy import OUStrategy
-from sandbox.rocky.tf.policies.deterministic_mlp_policy import DeterministicMLPPolicy
-from sandbox.rocky.tf.q_functions.continuous_mlp_q_function import ContinuousMLPQFunction
-
-from sandbox.rocky.tf.envs.base import TfEnv
-from rllab.envs.gym_env import GymEnv
-from rllab.misc import ext
-import pickle
+import argparse
 import os.path as osp
+import pickle
 
 import tensorflow as tf
 
-import argparse
+from ddpg.ddpg import DDPG
+from rllab.envs.gym_env import GymEnv
+from rllab.envs.normalized_env import normalize
+from rllab.exploration_strategies.ou_strategy import OUStrategy
+from rllab.misc import ext
+from rllab.misc.instrument import run_experiment_lite, stub
+from sandbox.rocky.tf.envs.base import TfEnv
+from sandbox.rocky.tf.policies.deterministic_mlp_policy import \
+    DeterministicMLPPolicy
+from sandbox.rocky.tf.q_functions.continuous_mlp_q_function import \
+    ContinuousMLPQFunction
+
 parser = argparse.ArgumentParser()
 parser.add_argument("env", help="The environment name from OpenAIGym environments")
 parser.add_argument("--num_epochs", default=100, type=int)
@@ -58,8 +60,7 @@ algo = DDPG(
     scale_reward=args.reward_scale,
     qf_learning_rate=1e-3,
     policy_learning_rate=1e-4,
-    plot=False,
-    sigma_type=args.type
+    plot=False
 )
 
 
@@ -72,7 +73,7 @@ run_experiment_lite(
     snapshot_mode="last",
     # Specifies the seed for the experiment. If this is not provided, a random seed
     # will be used
-    exp_prefix="DDPG" + args.env + "_" + args.type,
+    exp_prefix="DDPG_" + args.env,
     seed=1,
     mode="ec2" if args.use_ec2 else "local",
     plot=False,

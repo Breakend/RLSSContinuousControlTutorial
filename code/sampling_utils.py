@@ -83,9 +83,9 @@ class SimpleReplayPool(object):
             # this sample
             if index == self._size - 1 and self._size <= self._max_pool_size:
                 continue
-            # if self._terminals[index]:
-            #     continue
+
             transition_index = (index + 1) % self._max_pool_size
+
             # make sure that the transition is valid: discard the transition if it crosses horizon-triggered resets
             if not self._terminals[index] and self._initials[transition_index]:
                 continue

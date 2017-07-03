@@ -1,18 +1,8 @@
-# UnifiedPolicyGradients
+# Reinforcement Learning Summer School : Practical Tutorial on RL for Continuous Control
 
-Running
+Here we go over:
 
-setup rllab following the directions:
-
-https://github.com/openai/rllab
-
-<pre>
-$ source activate rllab3
-$ export PYTHONPATH=~/path/to/rllab/:$PYTHONPATH
-
--- for unified gated
-$ python run_ddpg_variations.py unified-gated Hopper-v1 --num_epochs 1000 --data_dir ./gated/
-
--- for baseline ddpg
-$ python run_ddpg_variations.py regular Hopper-v1 --num_epochs 1000 --data_dir ./gated/
-</pre>
++ How to setup MuJoCo and <a href="https://github.com/openai/rllab">openai/rllab</a>
++ How to run basic TRPO and DDPG code
++ The core code snippets in TRPO and DDPG so you can build on top of these algorithms
++ How to create your own modified MuJoCo environment

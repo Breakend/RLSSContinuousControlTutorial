@@ -1,21 +1,20 @@
-from rllab.envs.normalized_env import normalize
-from rllab.misc.instrument import stub, run_experiment_lite
-from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
-from rllab.envs.gym_env import GymEnv
-
-from sandbox.rocky.tf.envs.base import TfEnv
-from sandbox.rocky.tf.policies.gaussian_mlp_policy import GaussianMLPPolicy
-from sandbox.rocky.tf.algos.trpo import TRPO
-from rllab.misc import ext
-from sandbox.rocky.tf.optimizers.conjugate_gradient_optimizer import ConjugateGradientOptimizer
-from sandbox.rocky.tf.optimizers.conjugate_gradient_optimizer import FiniteDifferenceHvp
-
-import pickle
+import argparse
 import os.path as osp
+import pickle
 
 import tensorflow as tf
 
-import argparse
+from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
+from rllab.envs.gym_env import GymEnv
+from rllab.envs.normalized_env import normalize
+from rllab.misc import ext
+from rllab.misc.instrument import run_experiment_lite, stub
+from sandbox.rocky.tf.algos.trpo import TRPO
+from sandbox.rocky.tf.envs.base import TfEnv
+from sandbox.rocky.tf.optimizers.conjugate_gradient_optimizer import (ConjugateGradientOptimizer,
+                                                                      FiniteDifferenceHvp)
+from sandbox.rocky.tf.policies.gaussian_mlp_policy import GaussianMLPPolicy
+
 parser = argparse.ArgumentParser()
 parser.add_argument("env", help="The environment name from OpenAIGym environments")
 parser.add_argument("--num_epochs", default=100, type=int)
@@ -27,7 +26,7 @@ args = parser.parse_args()
 stub(globals())
 ext.set_seed(1)
 
-gymenv = GymEnv(args.env, force_reset=True, record_video=False, record_log=False)
+gymenv = GymEnv(args.env, force_reset=True, record_video=True, record_log=True)
 
 env = TfEnv(normalize(gymenv))
 
@@ -62,11 +61,10 @@ run_experiment_lite(
     snapshot_mode="last",
     # Specifies the seed for the experiment. If this is not provided, a random seed
     # will be used
-    exp_prefix="UnifiedDDPG_" + args.env + "_trpo",
+    exp_prefix="TRPO_" + args.env,
     seed=1,
     mode="ec2" if args.use_ec2 else "local",
     plot=False,
-    # dry=True,
     terminate_machine=args.dont_terminate_machine,
     added_project_directories=[osp.abspath(osp.join(osp.dirname(__file__), '.'))]
 )
